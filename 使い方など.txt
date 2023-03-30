@@ -1,0 +1,30 @@
+1. はじめに
+本ツール群はInstagramにて自動でフォローなどを行うツール群です。
+Python 3.11.2を中心とした環境で作成されています。
+
+ツールの利用は自己責任でお願いいたします。
+
+
+2. フォルダ構成について
+├── chromedriver.exe            ご利用のChromeのバージョンに合ったドライバを入手し、スクリプトと同じディレクトリに配置してください。
+├── insta_follow.py             Instagramで特定のハッシュタグ投稿をしている投稿者を特定の人数、自動でフォローするツールです。
+├── insta_like.py               Instagramで特定のハッシュタグ投稿特定の件数、自動でいいねするツールです。
+├── insta_post.py               Instagramへ自動で投稿するツールです。
+├── insta_settings.json.example ツールを実行するために必要な設定を記載するJsonファイルのサンプルです。"insta_settings.json"にリネームしてご利用ください。
+├── insta_unfollow.py           Instagramでフォロー一覧の下から順に特定の人数を自動でアンフォローするツールです。
+├── LICENSE                     ライセンスに関する記載です。
+├── requirements.txt            関連するPythonパッケージの一覧です。 
+└── 使い方など.txt               本テキストファイルです。
+
+
+3. 使い方
+・Pythonの仮想環境を構築し https://github.com/akiN-S/instaAuto1 をクローンしてください。
+・新規仮想環境内で pip install -r requirements.txt を実行してください。
+・"insta_settings.json"に以下を記載してください。
+　・Instagramへログインするためのユーザ名・パスワード
+　・いいね、フォロー、アンフォローを実施する回数
+　・いいね、フォローに使用するハッシュタグキーワード
+　・投稿する写真のパス、コメント
+・実行したいツールをPythonで実行してください。
+
+

@@ -1,0 +1,16 @@
+{
+    "username":"aaa",
+    "password":"bbb",
+
+    "maxLiking":5,
+    "likingTargetTag":"dogs",
+
+    "maxFollowing":10,
+    "followingTargetTag":"dogs",
+
+    "maxUnfollowing":2,
+
+    "postPic":"./xxx",
+    "postText":"yyy"
+
+}

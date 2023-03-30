@@ -1,0 +1,10 @@
+/build/
+/dist/
+/Include/
+/Lib/
+/Scripts/
+chromedriver.exe
+*.spec
+/insta_settings.json
+/pyvenv.cfg
+/insta_post.py
