@@ -1,0 +1,9 @@
+username,aaa,ログイン用ユーザー名
+password,bbb,ログイン用パスワード
+maxLiking,5,いいね実施を試みる回数
+likingTargetTag,dogs,いいね対象の特定キーワード
+maxFollowing,10,フォロー実施を試みる回数
+followingTargetTag,dogs,フォロー対象の特定キーワード
+maxUnfollowing,2,アンフォロー実施を試みる回数
+postPic,./xxx.jpg,投稿する写真ファイルへの相対パス
+postText,yyy,投稿するテキスト内容

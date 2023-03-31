@@ -7,6 +7,7 @@ from selenium.webdriver.common.by import By
 import datetime
 import time
 
+import sys
 import bs4
 import random
 import json
@@ -62,36 +63,31 @@ def following(driver, num):
 
 
 if __name__ == '__main__':
-    # 設定情報
-    settingFilePath = 'insta_settings.json'
-    with open(settingFilePath, 'r', encoding='utf-8') as f:
-        settings = json.load(f)
 
-    # ログイン情報
-    username = settings['username']
-    password = settings['password']
+    # 設定情報読み込み
+    instaSetting = insta_common.load_settings()
 
-    # 検索対象
-    tagName = settings['followingTargetTag']
-    print(insta_common.now_time() + '特定キーワード: ' + tagName)
+    if instaSetting.username == "" or instaSetting.password == "" \
+    or instaSetting.followingTargetTag == "" or instaSetting.maxFollowing == "":
+        print('必要な設定情報の読み込みに失敗しました')
+        sys.exit()
 
-    # フォローの設定
-    maxFollowing = settings['maxFollowing']
 
+    print(insta_common.now_time() + 'フォロー特定キーワード: ' + instaSetting.followingTargetTag)
+    print(insta_common.now_time() + 'フォロー試行対象投稿者数: ' + instaSetting.maxFollowing)
 
     # ログイン処理
-    driver = insta_common.insta_login(username, password)
+    driver = insta_common.insta_login(instaSetting.username, instaSetting.password)
 
     # 検索処理
-    insta_common.search_tags(driver, tagName)
+    insta_common.search_tags(driver, instaSetting.followingTargetTag)
 
 
     # 直近の投稿者をフォロー
     following(driver, 1) # 1人目の投稿者をフォロー
-    
 
-    # 22目以降の投稿者をフォローしていく
-    for i in range(maxFollowing-1):
+    # 2目以降の投稿者をフォローしていく
+    for i in range(int(instaSetting.maxFollowing)-1):
         following(driver, i+2)
 
     print(insta_common.now_time() + 'フォロー終了')

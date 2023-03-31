@@ -6,11 +6,93 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 import datetime
 import time
+import csv
 
+LOAD_FILE = "CSV" # 設定ファイルの種別を指定
+
+class InstaSetting:
+    username = None
+    password = None
+    maxLiking = None
+    likingTargetTag = None
+    maxFollowing = None
+    followingTargetTag = None
+    maxUnfollowing = None
+    postPic = None
+    postText = None
+   
+
+# 画面に文字を出力する際に時刻を表示する
 def now_time():
    dt_now = datetime.datetime.now()
    return dt_now.strftime('%m/%d %H:%M')+' '
 
+# 設定情報を読み込み、変数に格納する
+def load_settings():
+   
+   # 設定情報を格納するクラス
+   instaSetting = InstaSetting()
+
+   # JSONファイルを読み込む場合
+   if LOAD_FILE == "JSON":
+      # 設定情報を読み込み
+      settingFilePath = 'insta_settings.json'
+
+      with open(settingFilePath, 'r', encoding='utf-8') as f:
+         settings = json.load(f)
+      
+      # 設定情報を変数に展開
+      instaSetting.username = settings['username']
+      instaSetting.password = settings['password']
+      instaSetting.maxLiking = settings['maxLiking']
+      instaSetting.likingTargetTag = settings['likingTargetTag']
+      instaSetting.maxFollowing = settings['maxFollowing']
+      instaSetting.followingTargetTag = settings['followingTargetTag']
+      instaSetting.maxUnfollowing = settings['maxUnfollowing']
+      instaSetting.postPic = settings['postPic']
+      instaSetting.postText = settings['postText']
+
+   # CSVファイルを読み込む場合
+   elif LOAD_FILE == "CSV":
+      settingFilePath = 'insta_settings.csv'
+
+      with open(settingFilePath, 'r', encoding='shift_jis') as f:
+         reader = csv.reader(f)
+         countLine = 0
+         try:
+            for line in reader:
+               countLine = countLine + 1
+               key = line[0] # 0列目がkey
+               data = line[1] # 1列目がdata
+               
+               # 0列目のkeyのデータがクラスのメンバと一致したものを格納
+               if key == "username":
+                  instaSetting.username = data
+               elif key == "password":
+                  instaSetting.password = data
+               elif key == "maxLiking":
+                  instaSetting.maxLiking = data
+               elif key == "likingTargetTag":
+                  instaSetting.likingTargetTag = data
+               elif key == "maxFollowing":
+                  instaSetting.maxFollowing = data
+               elif key == "followingTargetTag":
+                  instaSetting.followingTargetTag = data
+               elif key == "maxUnfollowing":
+                  instaSetting.maxUnfollowing = data
+               elif key == "postPic":
+                  instaSetting.postPic = data
+               elif key == "postText":
+                  instaSetting.postText = data
+
+         except IndexError as e:
+            print("警告: " + str(countLine) + "行目のCSVデータの読み出しに失敗しました")
+
+   # 設定情報を格納したクラス変数を返却
+   return instaSetting
+
+
+# ログイン処理を行う
 def insta_login(username, password):
     # driver = webdriver.Chrome (ChromeDriverManager().install())
     driver = webdriver.Chrome('./chromedriver')

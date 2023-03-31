@@ -151,23 +151,22 @@ class followingCollector:
 
 
 if __name__ == '__main__':
-    # 設定情報
-    settingFilePath = 'insta_settings.json'
-    with open(settingFilePath, 'r', encoding='utf-8') as f:
-        settings = json.load(f)
-
-    # ログイン情報
-    username = settings['username']
-    password = settings['password']
-
-    # アンフォロー数の設定
-    maxUnfollowing = settings['maxUnfollowing']
     
-    if maxUnfollowing == 0:
-        print(insta_common.now_time() + 'アンフォロー対象が 0人 のためツールを終了します')
-        sys.exit( )
+    # 設定情報読み込み
+    instaSetting = insta_common.load_settings()
 
-    fc = followingCollector(username, password)
-    fc.main(username, maxUnfollowing)
+    if instaSetting.username == "" or instaSetting.password == "" \
+    or instaSetting.maxUnfollowing == "":
+        print('必要な設定情報の読み込みに失敗しました')
+        sys.exit()
+
+    print(insta_common.now_time() + 'アンフォロー試行対象投稿者数: ' + instaSetting.maxUnfollowing)
+
+    if int(instaSetting.maxUnfollowing) == 0:
+        print(insta_common.now_time() + 'アンフォロー対象が 0人 のためツールを終了します')
+        sys.exit()
+
+    fc = followingCollector(instaSetting.username, instaSetting.password)
+    fc.main(instaSetting.username, int(instaSetting.maxUnfollowing))
 
     subprocess.call('PAUSE', shell=True)

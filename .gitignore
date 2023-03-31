@@ -7,4 +7,7 @@ chromedriver.exe
 *.spec
 /insta_settings.json
 /pyvenv.cfg
+/insta_settings.csv
+/__pycache_/
+
 /insta_post.py
