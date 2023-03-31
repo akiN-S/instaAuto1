@@ -11,3 +11,5 @@ chromedriver.exe
 /__pycache_/
 
 /insta_post.py
+
+__pycache__/
